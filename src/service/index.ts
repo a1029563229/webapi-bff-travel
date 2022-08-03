@@ -7,7 +7,7 @@ const createAxios = (config: AxiosRequestConfig) => {
 };
 
 const shopService = createAxios({
-  baseURL: 'http://localhost:8899',
+  baseURL: 'http://localhost:7788',
 });
 
 const guidelineService = createAxios({
