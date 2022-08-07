@@ -7,11 +7,11 @@ const createAxios = (config: AxiosRequestConfig) => {
 };
 
 const shopService = createAxios({
-  baseURL: 'http://localhost:7788',
+  baseURL: 'http://localhost:10100',
 });
 
 const guidelineService = createAxios({
-  baseURL: 'http://localhost:10099',
+  baseURL: 'http://localhost:10200',
 });
 
 export { shopService, guidelineService };
