@@ -1,12 +1,15 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Application {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   name: string;
+
+  @Column()
+  code: string;
 
   @Column()
   docker_hub_url: string;
@@ -21,10 +24,10 @@ export class Application {
   release_version: number;
 
   @Column()
-  server_host: number;
+  server_port: number;
 
   @Column()
-  container_host: number;
+  container_port: number;
 
   @Column()
   networks: string;

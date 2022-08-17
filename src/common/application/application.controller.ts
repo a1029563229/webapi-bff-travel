@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApplicationService } from './application.service';
 import {
   AddApplicationDto,
@@ -11,20 +11,25 @@ export class ApplicationController {
   constructor(private readonly applicationService: ApplicationService) {}
 
   @Post('/add')
-  async addApplication(addApplicationDto: AddApplicationDto) {
+  @HttpCode(200)
+  async addApplication(@Body() addApplicationDto: AddApplicationDto) {
     await this.applicationService.addApplication(addApplicationDto);
-    return null;
+    return { code: 1, message: 'ok', data: null };
   }
 
   @Post('/update')
-  async updateApplication(updateApplicationDto: UpdateApplicationDto) {
+  @HttpCode(200)
+  async updateApplication(@Body() updateApplicationDto: UpdateApplicationDto) {
     await this.applicationService.updateApplication(updateApplicationDto);
-    return null;
+    return { code: 1, message: 'ok', data: null };
   }
 
   @Post('/delete')
-  async deleteApplication(queryOneApplicationDto: QueryOneApplicationDto) {
+  @HttpCode(200)
+  async deleteApplication(
+    @Body() queryOneApplicationDto: QueryOneApplicationDto,
+  ) {
     await this.applicationService.deleteApplication(queryOneApplicationDto.id);
-    return null;
+    return { code: 1, message: 'ok', data: null };
   }
 }

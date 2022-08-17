@@ -19,12 +19,13 @@ export class ApplicationService {
     addApplicationDto: AddApplicationDto,
   ): Application {
     application.name = addApplicationDto.name;
+    application.code = addApplicationDto.code;
     application.docker_hub_url = addApplicationDto.docker_hub_url;
     application.env = addApplicationDto.env;
     application.version = addApplicationDto.version;
     application.release_version = addApplicationDto.release_version;
-    application.server_host = addApplicationDto.server_host;
-    application.container_host = addApplicationDto.container_host;
+    application.server_port = addApplicationDto.server_port;
+    application.container_port = addApplicationDto.container_port;
     application.networks = addApplicationDto.networks;
     return application;
   }
