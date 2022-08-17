@@ -28,4 +28,7 @@ export class Application {
 
   @Column()
   networks: string;
+
+  @Column()
+  is_deleted: number;
 }

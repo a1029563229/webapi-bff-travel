@@ -12,7 +12,7 @@ export class AddApplicationDto {
 
   version: string;
 
-  release_version: string;
+  release_version: number;
 
   @IsNotEmpty({ message: '服务器端口不能为空' })
   server_host: number;
@@ -21,4 +21,14 @@ export class AddApplicationDto {
   container_host: number;
 
   networks: string;
+}
+
+export class UpdateApplicationDto extends AddApplicationDto {
+  @IsNotEmpty({ message: '应用 ID 不能为空' })
+  id: string;
+}
+
+export class QueryOneApplicationDto {
+  @IsNotEmpty({ message: '应用 ID 不能为空' })
+  id: string;
 }
