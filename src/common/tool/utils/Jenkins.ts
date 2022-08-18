@@ -1,12 +1,15 @@
-class Jenkins {
-  private version = '1.0.0';
-  private application = '';
+import { Application } from 'src/common/application/models/application.entity';
 
-  constructor(application: string) {
+class Jenkins {
+  private application: Application;
+
+  constructor(application: Application) {
     this.application = application;
   }
 
-  generate;
+  public init(): void {
+    console.log('jenkins init');
+  }
 }
 
 export default Jenkins;

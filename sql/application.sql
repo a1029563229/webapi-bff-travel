@@ -14,3 +14,5 @@ CREATE TABLE IF NOT EXISTS `application` (
   `updated_on` datetime COMMENT '更新时间',
   index `name`(`name`)
 ) engine = InnoDB charset = utf8;
+
+alter table `application` add index `code`(`code`);

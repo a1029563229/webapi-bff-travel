@@ -6,6 +6,7 @@ import { ApplicationModule } from './common/application/application.module';
 import { CommonModule } from './common/common/common.module';
 import { MapModule } from './common/third/map/map.module';
 import { WxModule } from './common/third/wx/wx.module';
+import { ToolModule } from './common/tool/tool.module';
 import { ShopModule } from './shop/shop/shop.module';
 
 @Module({
@@ -16,6 +17,7 @@ import { ShopModule } from './shop/shop/shop.module';
     WxModule,
     ShopModule,
     ApplicationModule,
+    ToolModule,
   ],
   controllers: [AppController],
   providers: [AppService],

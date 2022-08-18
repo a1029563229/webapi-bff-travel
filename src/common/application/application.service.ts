@@ -7,6 +7,14 @@ import { Application } from './models/application.entity';
 export class ApplicationService {
   constructor(private readonly connection: Connection) {}
 
+  getApplicationByCode(code: string): Promise<Application> {
+    return this.connection
+      .getRepository(Application)
+      .createQueryBuilder('application')
+      .where('code = :code', { code })
+      .getOne();
+  }
+
   addApplication(addApplicationDto: AddApplicationDto) {
     let application: Application = new Application();
 
