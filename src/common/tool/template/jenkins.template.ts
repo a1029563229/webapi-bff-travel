@@ -18,7 +18,7 @@ const node = `epipeline {
     }
     stage("Publish") {
       steps {
-        sh "docker login -u a1029563229 -p qwe1029563229 registry.cn-zhangjiakou.aliyuncs.com"
+        sh "docker login -u \${ACCOUNT} -p \${PASSWORD} registry.cn-zhangjiakou.aliyuncs.com"
         sh "docker image tag \${PACKET_NAME} \${DOCKER_HUB_HOST}/\${PACKET_NAME}"
         sh "docker image push \${DOCKER_HUB_HOST}/\${PACKET_NAME}"
         sh "docker image rm \${PACKET_NAME}"
@@ -35,9 +35,11 @@ const node = `epipeline {
     }
   }
   environment {
-    VERSION = {{version}}
-    DOCKER_HUB_HOST = {{DOCKER_HUB_HOST}}
-    SERVICE_NAME = {{SERVICE_NAME}}
+    VERSION = "{{version}}"
+    DOCKER_HUB_HOST = "{{docker_hub_url}}"
+    SERVICE_NAME = "{{service_name}}"
+    ACCOUNT = "{{account}}"
+    PASSWORD = "{{password}}"
     PACKET_NAME = "\${env.SERVICE_NAME}:\${VERSION}-\${BUILD_ID}"
   }
 }`;

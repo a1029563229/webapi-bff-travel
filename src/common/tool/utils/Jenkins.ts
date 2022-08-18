@@ -1,4 +1,5 @@
 import jenkinsTemplate from '../template/jenkins.template';
+import Handlebars from 'handlebars';
 
 export type AppInfo = {
   id: string;
@@ -28,7 +29,13 @@ class Jenkins {
   private buildJenkinsFile() {
     const type = this.appInfo.type;
     const template = jenkinsTemplate[type];
-    console.log(template);
+    const hTemplate = Handlebars.compile(template);
+    const jenkinsfile = hTemplate({
+      version: this.appInfo.version,
+      docker_hub_url: this.appInfo.docker_hub_url,
+      service_name: this.appInfo.code,
+    });
+    console.log(jenkinsfile);
   }
 }
 
