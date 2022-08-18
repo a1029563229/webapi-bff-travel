@@ -1,4 +1,4 @@
-const node = `epipeline {
+const node = `pipeline {
   agent any
 
   stages {
