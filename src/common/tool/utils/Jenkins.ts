@@ -69,6 +69,7 @@ class Jenkins {
   private uploadCIConfig() {
     const workdir = path.resolve(__dirname, '../template/ci_config_file');
     shelljs.exec(`cd ${workdir}`);
+    shelljs.exec(`pwd`);
     shelljs.exec('git add .');
     shelljs.exec('git commit -m "update"');
     shelljs.exec('git push origin master');
