@@ -1,5 +1,6 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApplicationService } from './application.service';
+import { AddAppEnvDto } from './dto/appEnv.dto';
 import {
   AddApplicationDto,
   QueryOneApplicationDto,
@@ -14,6 +15,13 @@ export class ApplicationController {
   @HttpCode(200)
   async addApplication(@Body() addApplicationDto: AddApplicationDto) {
     await this.applicationService.addApplication(addApplicationDto);
+    return { code: 1, message: 'ok', data: null };
+  }
+
+  @Post('/addEnv')
+  @HttpCode(200)
+  async addAppEnv(@Body() addAppEnvDto: AddAppEnvDto) {
+    await this.applicationService.addAppEnv(addAppEnvDto);
     return { code: 1, message: 'ok', data: null };
   }
 

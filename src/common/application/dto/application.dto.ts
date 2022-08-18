@@ -7,21 +7,8 @@ export class AddApplicationDto {
   @IsNotEmpty({ message: '应用code不能为空' })
   code: string;
 
-  @IsNotEmpty({ message: 'docker 镜像仓库地址不能为空' })
-  docker_hub_url: string;
-
-  @IsNotEmpty({ message: '环境信息不能为空' })
-  env: string;
-
-  version: string;
-
-  release_version: number;
-
-  @IsNotEmpty({ message: '服务器端口不能为空' })
-  server_port: number;
-
-  @IsNotEmpty({ message: '容器端口不能为空' })
-  container_port: number;
+  @IsNotEmpty({ message: '应用类型不能为空' })
+  type: string;
 
   networks: string;
 }

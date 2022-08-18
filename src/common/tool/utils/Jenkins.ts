@@ -1,14 +1,34 @@
-import { Application } from 'src/common/application/models/application.entity';
+import jenkinsTemplate from '../template/jenkins.template';
+
+export type AppInfo = {
+  id: string;
+  name: string;
+  code: string;
+  type: string;
+  docker_hub_url: string;
+  env: string;
+  version: string;
+  release_version: number;
+  server_port: number;
+  container_port: number;
+  networks: string;
+};
 
 class Jenkins {
-  private application: Application;
+  private appInfo: AppInfo;
 
-  constructor(application: Application) {
-    this.application = application;
+  constructor(appInfo: AppInfo) {
+    this.appInfo = appInfo;
   }
 
   public init(): void {
-    console.log('jenkins init');
+    this.buildJenkinsFile();
+  }
+
+  private buildJenkinsFile() {
+    const type = this.appInfo.type;
+    const template = jenkinsTemplate[type];
+    console.log(template);
   }
 }
 
