@@ -29,7 +29,7 @@ const node = `pipeline {
         sh """
           cd /project/mall-scripts
           pwd
-          npm run build:test \${SERVICE_NAME} \${VERSION}-\${BUILD_ID}
+          npm run build:test \${SERVICE_NAME} \${VERSION}-{{release_version}}
         """.stripIndent().trim()
       }
     }
@@ -40,7 +40,7 @@ const node = `pipeline {
     SERVICE_NAME = "{{service_name}}"
     ACCOUNT = "{{account}}"
     PASSWORD = "{{password}}"
-    PACKET_NAME = "\${env.SERVICE_NAME}:\${VERSION}-\${BUILD_ID}"
+    PACKET_NAME = "\${env.SERVICE_NAME}:\${VERSION}-{{release_version}}"
   }
 }`;
 

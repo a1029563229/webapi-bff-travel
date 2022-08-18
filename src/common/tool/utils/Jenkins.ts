@@ -41,9 +41,10 @@ class Jenkins {
     const template = jenkinsTemplate[type];
     const hTemplate = Handlebars.compile(template);
     const jenkinsfile = hTemplate({
-      version: this.appInfo.version,
-      docker_hub_url: this.appInfo.docker_hub_url,
       service_name: this.appInfo.code,
+      docker_hub_url: this.appInfo.docker_hub_url,
+      version: this.appInfo.version,
+      release_version: this.appInfo.release_version,
       account: process.env.DOCKER_ACCOUNT,
       password: process.env.DOCKER_PASSWORD,
     });
@@ -68,7 +69,7 @@ class Jenkins {
 
   private uploadCIConfig() {
     const workdir = path.resolve(__dirname, '../template/ci_config_file');
-    shelljs.exec(`cd ${workdir}`);
+    shelljs.cd(workdir);
     shelljs.exec(`pwd`);
     shelljs.exec('git add .');
     shelljs.exec('git commit -m "update"');
