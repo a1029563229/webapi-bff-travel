@@ -20,6 +20,8 @@ export type AppInfo = {
   server_port: number;
   container_port: number;
   networks: string;
+  cluster: string;
+  is_publish: number;
 };
 
 class Jenkins {

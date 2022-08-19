@@ -30,5 +30,11 @@ export class AppEnv {
   networks: string;
 
   @Column()
+  cluster: string;
+
+  @Column()
+  is_publish: number;
+
+  @Column()
   is_deleted: number;
 }

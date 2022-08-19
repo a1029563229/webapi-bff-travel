@@ -20,6 +20,12 @@ export class AddAppEnvDto {
   @IsNotEmpty({ message: '容器端口不能为空' })
   container_port: number;
 
+  @IsNotEmpty({ message: '容器集群不能为空' })
+  cluster: string;
+
+  @IsNotEmpty({ message: '容器发布状态不能为空' })
+  is_publish: number;
+
   networks: string;
 }
 

@@ -27,3 +27,8 @@ CREATE TABLE IF NOT EXISTS `app_env` (
 alter table `application` add column (
   `type` varchar(36) not null default ''
 )
+
+alter table `app_env` add column (
+  `cluster` varchar(36) not null default '' comment '集群',
+  `is_publish` tinyint unsigned default 0 comment '是否发布'
+)
