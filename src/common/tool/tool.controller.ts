@@ -6,22 +6,11 @@ import Jenkins from './utils/Jenkins';
 
 @Controller('tool')
 export class ToolController {
-  constructor(
-    private readonly toolService: ToolService,
-    private readonly applicationService: ApplicationService,
-  ) {}
+  constructor(private readonly toolService: ToolService) {}
 
   @Post('/build/application')
   async generateJenkinsfile(@Body() appInfo: AppInfo) {
-    const application: any = await this.applicationService.getAppEnvInfo(
-      appInfo.appCode,
-      appInfo.env,
-    );
-    if (!application) throw new Error('该应用不存在');
-    if (!application.env) throw new Error('该环境信息不存在');
-
-    const jenkins = new Jenkins(application);
-    jenkins.init();
+    await this.toolService.generateDeployFile(appInfo);
     return { code: 1, message: 'ok', data: null };
   }
 }

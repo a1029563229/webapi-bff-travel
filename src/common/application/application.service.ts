@@ -47,11 +47,45 @@ export class ApplicationService {
         app_env.release_version as release_version,
         app_env.server_port as server_port,
         app_env.container_port as container_port,
-        app_env.networks as networks
+        app_env.networks as networks,
+        app_env.cluster as cluster,
+        app_env.is_publish as is_publish
       `,
       )
       .where('code = :appCode', { appCode })
       .getRawOne();
+  }
+
+  getPublishAppList(env: string) {
+    return this.connection
+      .getRepository(AppEnv)
+      .createQueryBuilder('app_env')
+      .leftJoinAndSelect(
+        Application,
+        'application',
+        'application.code = app_env.app_code',
+      )
+      .select(
+        `application.id as id,
+    application.name as name,
+    application.code as code,
+    application.type as type,
+    app_env.docker_hub_url as docker_hub_url,
+    app_env.env as env,
+    app_env.version as version,
+    app_env.release_version as release_version,
+    app_env.server_port as server_port,
+    app_env.container_port as container_port,
+    app_env.networks as networks,
+    app_env.cluster as cluster,
+    app_env.is_publish as is_publish
+    `,
+      )
+      .where(
+        'app_env.env = :env and app_env.is_publish = 1 and app_env.is_deleted = 0',
+        { env },
+      )
+      .getRawMany();
   }
 
   async addApplication(addApplicationDto: AddApplicationDto) {
