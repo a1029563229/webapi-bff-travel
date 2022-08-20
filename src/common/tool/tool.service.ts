@@ -1,33 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import { ApplicationService } from '../application/application.service';
-import { AppInfo } from './dto/tool.dto';
+import { Application } from '../application/models/application.entity';
+import { AppInfoDto } from './dto/tool.dto';
+import ciConfig from './utils/CIConfig';
+import DockerCompose from './utils/DockerCompose';
 import Jenkins from './utils/Jenkins';
 
 @Injectable()
 export class ToolService {
   constructor(private readonly applicationService: ApplicationService) {}
 
-  public async generateDeployFile(appInfo: AppInfo) {
-    // await this.generateJenkinsFile(appInfo);
-    await this.generateDockerComposeFile(appInfo);
+  public async updateAppReleaseVersion(appInfoDto: AppInfoDto) {
+    await this.applicationService.updateAppReleaseVersion(
+      appInfoDto.appCode,
+      appInfoDto.env,
+    );
   }
 
-  private async generateJenkinsFile(appInfo: AppInfo) {
+  public async generateDeployFile(appInfoDto: AppInfoDto) {
+    ciConfig.downloadCIConfig();
+    await this.generateJenkinsFile(appInfoDto);
+    await this.generateDockerComposeFile(appInfoDto);
+    ciConfig.uploadCIConfig();
+  }
+
+  private async generateJenkinsFile(appInfoDto: AppInfoDto) {
     const application: any = await this.applicationService.getAppEnvInfo(
-      appInfo.appCode,
-      appInfo.env,
+      appInfoDto.appCode,
+      appInfoDto.env,
     );
-    if (!application) throw new Error('该应用不存在');
-    if (!application.env) throw new Error('该环境信息不存在');
 
     const jenkins = new Jenkins(application);
     jenkins.init();
   }
 
-  private async generateDockerComposeFile(appInfo: AppInfo) {
+  private async generateDockerComposeFile(appInfoDto: AppInfoDto) {
     const appList = await this.applicationService.getPublishAppList(
-      appInfo.env,
+      appInfoDto.env,
     );
-    console.log(appList);
+    const dockerCompose = new DockerCompose(appList, appInfoDto.env);
+    dockerCompose.init();
   }
 }

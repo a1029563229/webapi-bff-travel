@@ -151,4 +151,14 @@ export class ApplicationService {
     application.is_deleted = 1;
     this.connection.manager.save(application);
   }
+
+  async updateAppReleaseVersion(appCode: string, env: string) {
+    const appEnv = await this.connection
+      .getRepository(AppEnv)
+      .createQueryBuilder('app_env')
+      .where('app_code = :appCode and env = :env', { appCode, env })
+      .getOne();
+    appEnv.release_version += 1;
+    await this.connection.manager.save(appEnv);
+  }
 }
