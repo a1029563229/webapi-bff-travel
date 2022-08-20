@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const shelljs = require('shelljs');
+// import shelljs from 'shelljs';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs');
 // import fs from 'fs';
@@ -8,10 +9,12 @@ const path = require('path');
 
 class CIConfig {
   public downloadCIConfig() {
-    const workdir = path.resolve(__dirname, '../template/ci_config_file');
-    shelljs.exec(`rm -rf ${workdir}`);
+    console.log('downloadCIConfig');
+    const workdir = path.resolve(__dirname, '../template');
+    shelljs.cd(workdir);
+    shelljs.exec(`pwd`);
     shelljs.exec(
-      `git clone git@e.coding.net:jt-gmall/mall-script/ci_config_file.git ${workdir}`,
+      `git clone git@e.coding.net:jt-gmall/mall-script/ci_config_file.git ci_config_file`,
     );
   }
 
@@ -30,6 +33,7 @@ class CIConfig {
     shelljs.exec('git add .');
     shelljs.exec('git commit -m "update"');
     shelljs.exec('git push origin master');
+    shelljs.exec(`rm -rf ${workdir}`);
   }
 }
 

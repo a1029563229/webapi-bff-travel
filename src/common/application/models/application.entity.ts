@@ -15,5 +15,8 @@ export class Application {
   type: string;
 
   @Column()
+  git_repository: string;
+
+  @Column()
   is_deleted: number;
 }

@@ -13,7 +13,7 @@ export class ToolController {
 
   @Post('/build/application')
   @HttpCode(200)
-  async generateJenkinsfile(@Body() appInfoDto: AppInfoDto) {
+  async buildApplication(@Body() appInfoDto: AppInfoDto) {
     const application: any = await this.applicationService.getAppEnvInfo(
       appInfoDto.appCode,
       appInfoDto.env,

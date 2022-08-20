@@ -41,6 +41,7 @@ export class ApplicationService {
         application.name as name,
         application.code as code,
         application.type as type,
+        application.git_repository as git_repository,
         app_env.docker_hub_url as docker_hub_url,
         app_env.env as env,
         app_env.version as version,

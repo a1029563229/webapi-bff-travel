@@ -7,9 +7,11 @@ export type AppInfo = {
   name: string;
   code: string;
   type: string;
+  git_repository: string;
   docker_hub_url: string;
   env: string;
   version: string;
+  branch: string;
   release_version: number;
   server_port: number;
   container_port: number;
@@ -36,11 +38,13 @@ class Jenkins {
     const hTemplate = Handlebars.compile(template);
     const jenkinsfile = hTemplate({
       service_name: this.appInfo.code,
+      git_repository: this.appInfo.git_repository,
       docker_hub_url: this.appInfo.docker_hub_url,
       version: this.appInfo.version,
       release_version: this.appInfo.release_version,
       account: process.env.DOCKER_ACCOUNT,
       password: process.env.DOCKER_PASSWORD,
+      branch: this.appInfo.branch,
     });
     return jenkinsfile;
   }

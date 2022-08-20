@@ -31,6 +31,7 @@ export class ToolService {
     );
 
     const jenkins = new Jenkins(application);
+    application.branch = appInfoDto.branch || 'master';
     jenkins.init();
   }
 

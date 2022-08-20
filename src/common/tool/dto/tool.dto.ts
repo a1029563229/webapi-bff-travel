@@ -5,4 +5,6 @@ export class AppInfoDto {
   appCode: string;
 
   env: string;
+
+  branch: string;
 }
