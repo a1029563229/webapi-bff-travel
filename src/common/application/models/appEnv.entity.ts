@@ -33,6 +33,9 @@ export class AppEnv {
   cluster: string;
 
   @Column()
+  env_info: string;
+
+  @Column()
   is_publish: number;
 
   @Column()

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
-import { AddAppEnvDto } from './dto/appEnv.dto';
+import { AddAppEnvDto, UpdateAppEnvDto } from './dto/appEnv.dto';
 import { AddApplicationDto, UpdateApplicationDto } from './dto/application.dto';
 import { AppEnv } from './models/appEnv.entity';
 import { Application } from './models/application.entity';
@@ -50,6 +50,7 @@ export class ApplicationService {
         app_env.container_port as container_port,
         app_env.networks as networks,
         app_env.cluster as cluster,
+        app_env.env_Info as env_info,
         app_env.is_publish as is_publish
       `,
       )
@@ -126,14 +127,20 @@ export class ApplicationService {
   }
 
   getAppEnv(appEnv: AppEnv, addAppEnvDto: AddAppEnvDto): AppEnv {
-    appEnv.app_code = addAppEnvDto.appCode;
-    appEnv.docker_hub_url = addAppEnvDto.docker_hub_url;
-    appEnv.env = addAppEnvDto.env;
-    appEnv.version = addAppEnvDto.version;
-    appEnv.release_version = addAppEnvDto.release_version;
-    appEnv.server_port = addAppEnvDto.server_port;
-    appEnv.container_port = addAppEnvDto.container_port;
-    appEnv.networks = addAppEnvDto.networks;
+    appEnv.app_code = addAppEnvDto.appCode || appEnv.app_code;
+    appEnv.docker_hub_url =
+      addAppEnvDto.docker_hub_url || appEnv.docker_hub_url;
+    appEnv.env = addAppEnvDto.env || appEnv.env;
+    appEnv.version = addAppEnvDto.version || appEnv.version;
+    appEnv.release_version =
+      addAppEnvDto.release_version || appEnv.release_version;
+    appEnv.server_port = addAppEnvDto.server_port || appEnv.server_port;
+    appEnv.container_port =
+      addAppEnvDto.container_port || appEnv.container_port;
+    appEnv.networks = addAppEnvDto.networks || appEnv.networks;
+    appEnv.env_info = addAppEnvDto.env_info
+      ? JSON.stringify(addAppEnvDto.env_info)
+      : appEnv.env_info;
     return appEnv;
   }
 
@@ -161,5 +168,15 @@ export class ApplicationService {
       .getOne();
     appEnv.release_version += 1;
     await this.connection.manager.save(appEnv);
+  }
+
+  async updateAppEnv(updateAppEnvDto: UpdateAppEnvDto) {
+    let appEnv = await this.connection.manager.findOne(
+      AppEnv,
+      updateAppEnvDto.id,
+    );
+
+    appEnv = this.getAppEnv(appEnv, updateAppEnvDto);
+    return this.connection.manager.save(appEnv);
   }
 }

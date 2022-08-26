@@ -30,3 +30,7 @@ alter table `app_env` add column (
   `cluster` varchar(36) not null default '' comment '集群',
   `is_publish` tinyint unsigned default 0 comment '是否发布'
 )
+
+alter table `app_env` add column (
+  `env_info` text
+)

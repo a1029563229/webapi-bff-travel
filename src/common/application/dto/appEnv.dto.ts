@@ -27,9 +27,11 @@ export class AddAppEnvDto {
   is_publish: number;
 
   networks: string;
+
+  env_info: string;
 }
 
-export class UpdateApplicationDto extends AddAppEnvDto {
+export class UpdateAppEnvDto extends AddAppEnvDto {
   @IsNotEmpty({ message: '环境 ID 不能为空' })
   id: string;
 }

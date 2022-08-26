@@ -45,6 +45,7 @@ class Jenkins {
       account: process.env.DOCKER_ACCOUNT,
       password: process.env.DOCKER_PASSWORD,
       branch: this.appInfo.branch,
+      env: this.appInfo.env,
     });
     return jenkinsfile;
   }
