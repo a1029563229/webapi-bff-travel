@@ -26,14 +26,6 @@ const node = `pipeline {
         sh "docker image rm \${PACKET_NAME}"
       }
     }
-    stage("Deploy") {
-      steps {
-        sh "rm -rf ci_config_file"
-        sh "git clone git@e.coding.net:jt-gmall/mall-script/ci_config_file.git ci_config_file -b master"
-        sh "docker-compose -f ./ci_config_file/docker-compose/docker-compose.\${ENV}.yml up -d"
-        sh "pwd"
-      }
-    }
   }
   environment {
     VERSION = "{{version}}"

@@ -18,18 +18,19 @@ export type AppInfo = {
   networks: string;
   cluster: string;
   is_publish: number;
+  env_info: any;
 };
 
 class Jenkins {
   private appInfo: AppInfo;
+  private jenkinsfile: string;
 
   constructor(appInfo: AppInfo) {
     this.appInfo = appInfo;
   }
 
   public init(): void {
-    const jenkinsfile = this.buildJenkinsFile();
-    this.writeJenkinsfile(jenkinsfile);
+    this.jenkinsfile = this.buildJenkinsFile();
   }
 
   private buildJenkinsFile(): string {
@@ -50,10 +51,10 @@ class Jenkins {
     return jenkinsfile;
   }
 
-  private writeJenkinsfile(jenkinsfile: string) {
+  public writeJenkinsfile() {
     ciConfig.writeConfigFile(
       `jenkinsfile/${this.appInfo.type}/Jenkinsfile`,
-      jenkinsfile,
+      this.jenkinsfile,
     );
   }
 }

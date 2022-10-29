@@ -11,6 +11,8 @@ class CIConfig {
   public downloadCIConfig() {
     console.log('downloadCIConfig');
     const workdir = path.resolve(__dirname, '../template');
+    const ciConfigFile = path.resolve(__dirname, '../template/ci_config_file');
+    shelljs.exec(`rm -rf ${ciConfigFile}`);
     shelljs.cd(workdir);
     shelljs.exec(`pwd`);
     shelljs.exec(
@@ -23,7 +25,20 @@ class CIConfig {
       __dirname,
       `../template/ci_config_file/${file}`,
     );
+
+    this.createDirIfNotExists(file);
     fs.writeFileSync(filePath, fileContent, 'utf-8');
+  }
+
+  public createDirIfNotExists(filePath: string) {
+    const dirs = filePath.split('/').slice(0, -1);
+    let dirPath = path.resolve(__dirname, `../template/ci_config_file`);
+    dirs.forEach((dirName) => {
+      dirPath = path.join(dirPath, dirName);
+      if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath);
+      }
+    });
   }
 
   public uploadCIConfig() {
@@ -33,7 +48,6 @@ class CIConfig {
     shelljs.exec('git add .');
     shelljs.exec('git commit -m "update"');
     shelljs.exec('git push origin master');
-    shelljs.exec(`rm -rf ${workdir}`);
   }
 }
 

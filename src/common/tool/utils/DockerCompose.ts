@@ -7,6 +7,8 @@ class DockerCompose {
   private appList: AppInfo[];
   private env: string;
 
+  private dockerComposeFile: string;
+
   constructor(appList: AppInfo[], env: string) {
     this.appList = appList;
     this.env = env;
@@ -14,8 +16,7 @@ class DockerCompose {
 
   public init(): void {
     const template = this.generateTemplate();
-    const yamlTemplate = this.convertToYaml(template);
-    this.writeDockerComposeFile(yamlTemplate);
+    this.dockerComposeFile = this.convertToYaml(template);
   }
 
   private generateTemplate(): any {
@@ -51,10 +52,10 @@ class DockerCompose {
     return yamlTemplate;
   }
 
-  private writeDockerComposeFile(dockerComposeFile: string) {
+  public writeDockerComposeFile() {
     ciConfig.writeConfigFile(
       `docker-compose/docker-compose.${this.env}.yml`,
-      dockerComposeFile,
+      this.dockerComposeFile,
     );
   }
 }

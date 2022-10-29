@@ -23,6 +23,7 @@ export class ToolController {
 
     await this.toolService.updateAppReleaseVersion(appInfoDto);
     await this.toolService.generateDeployFile(appInfoDto);
+
     return { code: 1, message: 'ok', data: null };
   }
 }
