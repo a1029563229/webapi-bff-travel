@@ -4,6 +4,15 @@ import { AppModule } from './app.module';
 import { ResponseErrorInterceptor } from './interceptors/responseError.interceptor';
 import { ResponseFormatInterceptor } from './interceptors/responseFormat.interceptor';
 import { ValidationPipe } from './pipes/validate.pipe';
+import worker from './utils/worker';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
+
+const rootPath = path.resolve(
+  __dirname,
+  process.env.NODE_ENV === 'development' ? '../' : '../../',
+);
+worker.setRootPath(rootPath);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

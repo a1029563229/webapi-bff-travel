@@ -1,12 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const shelljs = require('shelljs');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const fs = require('fs');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require('path');
-
 class Worker {
   private rootPath = './';
+  private workDir = '';
 
   public getRootPath() {
     return this.rootPath;
@@ -17,7 +11,11 @@ class Worker {
   }
 
   public setWorkDir(workDir: string) {
-    shelljs.cd(dir);
+    this.workDir = workDir;
+  }
+
+  public getWorkDir() {
+    return this.workDir;
   }
 }
 
