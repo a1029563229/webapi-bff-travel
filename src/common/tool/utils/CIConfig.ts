@@ -8,23 +8,37 @@ const fs = require('fs');
 const path = require('path');
 
 class CIConfig {
+  private workdir: string = __dirname;
+
+  public setWorkDir(workdir: string) {
+    this.workdir = workdir;
+  }
+
   public downloadCIConfig() {
     console.log('downloadCIConfig');
-    const workdir = path.resolve(__dirname, '../template');
-    const ciConfigFile = path.resolve(__dirname, '../template/ci_config_file');
-    shelljs.exec(`rm -rf ${ciConfigFile}`);
-    shelljs.cd(workdir);
+    this.entryWorkDir();
+    this.downloadGitRepository();
+    this.clearCIConfig();
+  }
+
+  private entryWorkDir() {
+    shelljs.cd(this.workdir);
+  }
+
+  private downloadGitRepository() {
     shelljs.exec(`pwd`);
     shelljs.exec(
       `git clone git@e.coding.net:jt-gmall/mall-script/ci_config_file.git ci_config_file`,
     );
   }
 
+  private clearCIConfig() {
+    const ciConfigFile = path.resolve(this.workdir, './ci_config_file');
+    shelljs.exec(`rm -rf ${ciConfigFile}`);
+  }
+
   public writeConfigFile(file: string, fileContent: string) {
-    const filePath = path.resolve(
-      __dirname,
-      `../template/ci_config_file/${file}`,
-    );
+    const filePath = path.resolve(this.workdir, `./ci_config_file/${file}`);
 
     this.createDirIfNotExists(file);
     fs.writeFileSync(filePath, fileContent, 'utf-8');
@@ -32,7 +46,7 @@ class CIConfig {
 
   public createDirIfNotExists(filePath: string) {
     const dirs = filePath.split('/').slice(0, -1);
-    let dirPath = path.resolve(__dirname, `../template/ci_config_file`);
+    let dirPath = path.resolve(this.workdir, `./ci_config_file`);
     dirs.forEach((dirName) => {
       dirPath = path.join(dirPath, dirName);
       if (!fs.existsSync(dirPath)) {
@@ -42,7 +56,7 @@ class CIConfig {
   }
 
   public uploadCIConfig() {
-    const workdir = path.resolve(__dirname, '../template/ci_config_file');
+    const workdir = path.resolve(this.workdir, './ci_config_file');
     shelljs.cd(workdir);
     shelljs.exec(`pwd`);
     shelljs.exec('git add .');

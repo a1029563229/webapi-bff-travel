@@ -14,8 +14,13 @@ class EnvFile {
   }
 
   public init() {
+    const { code } = this.appInfo;
+    const appDir = path.resolve(__dirname, code);
+
+    console.log({ appDir });
     this.downloadGitRepository();
-    this.envFileStr = this.buildEnvFileStr();
+    this.scanAppEnvFileTemplates(appDir);
+    this.clearGitRepository(appDir);
   }
 
   private downloadGitRepository() {
@@ -24,6 +29,16 @@ class EnvFile {
     shelljs.exec(`
       git clone ${git_repository} -b ${branch} ${code}
     `);
+  }
+
+  private scanAppEnvFileTemplates(appDir: string) {
+    const configTmplDir = path.resolve(appDir, 'config_tmpl');
+    console.log({ configTmplDir });
+    // shelljs.cd(``)
+  }
+
+  private clearGitRepository(appDir: string) {
+    shelljs.exec(`rm -rf ${appDir}`);
   }
 
   private buildEnvFileStr(): string {
