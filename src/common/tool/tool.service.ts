@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ApplicationService } from '../application/application.service';
-import { Application } from '../application/models/application.entity';
 import { AppInfoDto } from './dto/tool.dto';
 import ciConfig from './utils/CIConfig';
 import DockerCompose from './utils/DockerCompose';
@@ -39,7 +38,7 @@ export class ToolService {
   private async generateEnvFile() {
     const envFile = new EnvFile(this.applicationInfo);
     envFile.init();
-    envFile.writeJenkinsfile();
+    envFile.writeEnvFile();
   }
 
   private async generateJenkinsFile() {
